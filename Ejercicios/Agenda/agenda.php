@@ -8,32 +8,37 @@
 
 <body>
     <?php
-
-    if (isset($_GET['agenda'])) {
-        $agenda = $_GET['agenda'];
-    } else {
-        $agenda = [];
-    }
-    if (isset($_GET['submit'])) {
-        $nuevo_nombre = filter_input(INPUT_GET, 'nombre');
-        $nuevo_telefono = filter_input(INPUT_GET, 'telefono');
-        if (empty($nuevo_nombre)) {
-            echo "<h2 style='color: red'>Debes introducir un nombre</h2><br>";
-        } elseif (empty($nuevo_telefono)) {
-            unset($agenda[$nuevo_nombre]);
-            echo "<h2 style='color: red'>Has borrado el contacto: " . $nuevo_nombre . " </h2><br>" ;
+        // Revisamos si agenda tiene un valor con isset
+        if (isset($_GET['agenda'])) {
+            $agenda = $_GET['agenda'];
+        // Si no existe, la creamos
         } else {
-            $agenda[$nuevo_nombre] = $nuevo_telefono;
+            $agenda = [];
         }
-    }
+
+        // Si la super global tiene el valor submit, revisamos los valores introducidos
+        if (isset($_GET['submit'])) {
+
+            $nuevo_nombre = filter_input(INPUT_GET, 'nombre');
+            $nuevo_telefono = filter_input(INPUT_GET, 'telefono');
+
+            if (empty($nuevo_nombre)) {
+                echo "<h2 style='color: red'>Debes introducir un nombre</h2><br>";
+            } elseif (empty($nuevo_telefono)) {
+                unset($agenda[$nuevo_nombre]);
+                echo "<h2 style='color: red'>Has borrado el contacto: " . $nuevo_nombre . " </h2><br>" ;
+            } else {
+                $agenda[$nuevo_nombre] = $nuevo_telefono; // Agenda[array] --> NuevoNOmbre(clave), nuevo telefono(valor)
+            }
+        }
 
     ?>
 
-    <!-- Creamos el formulario para introducir los datos -->
+    <!--FORMULARIO -->
     <h2>Insertar nuevo contacto</h2>
-    <form method="get">
-        <!-- Metemos los contactos ya existentes ocultos en el formulario -->
+    <form method="GET">
         <div>
+            <!-- Insertamos los contactos ya existentes en un input oculto en el formulario -->
             <?php
             foreach ($agenda as $nom => $telf) {
                 echo '<input type="hidden" name="agenda[' . $nom . ']" ' . 'value="' . $telf . '">';
@@ -45,12 +50,11 @@
         </div>
     </form>
 
-    <!-- Mostramos los contactos de la agenda -->
+    <!-- Mostrar contactos -->
     <h2>Agenda</h2>
     <?php
-
     function mostrarAgenda(){
-        global $agenda;
+        global $agenda; // Acedemos a la variable global agenda, ya que no es local de esta funcion
 
         if (empty($agenda)) {
             echo "No hay contactos en la agenda, por favor, insértalos";
