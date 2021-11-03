@@ -1,24 +1,16 @@
 <?php
 // Crear clases
 
-class Dispositivos{
-
+class Dispositivo{
      public function __construct(public string $nombre, public int $precio, public string $disponibilidad){
      }
-
+     public function __set($name, $value)
+     {
+          $this->$name = $value;    
+     }
 }
 
 // Llamara a las variables de la clase
 
-$dispositivo = new Dispositivos('Tablet', 120, "Sí");
+$dispositivo = new Dispositivo('Tablet', 120, "Sí");
 ?>
-
-<Doctype html>
-    <body>
-        <?php
-        echo "<pre>";
-        var_dump($dispositivo);
-        echo "</pre>";
-        ?>
-    </body>
-</html>
