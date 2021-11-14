@@ -1,41 +1,30 @@
 <?php
-    function ordenar(){
-
-        // Creamos un array en el que vamos a almacenar los valores insertados por pantalla
-
-        $array = [];
-
-        echo "<h2>Introduce 5 números</h2> \n";
-
-        // Los números pedidos por pantalla se almacenarán en su respectiva variable
-
-        $primero = (int)readline('Introduce el primer integer: ');
-        $segundo = (int)readline('Introduce el segundo integer: ');
-        $tercero = (int)readline('Introduce el tercero integer: ');
-        $cuarto = (int)readline('Introduce el cuarto integer: ');
-        $quinto = (int)readline('Introduce el quinto integer: ');
-
-        array_push($array,$primero,$segundo, $tercero,$cuarto,$quinto); // Insertamos los valores en el array
-
-        $longitud = count($array); // Medimos la longitud del array
-
-        // Mejorar redacción de la lógica
-            
-        for($i = 0; $i< $longitud; $i++){ // Creamos la variable i y debe de ser menor que el array
-            for($j = 0; $j < $longitud -1; $j++){ // Cramos la variable j, que nos permite ver el numero de iteraciones
-                if($array[$j] > $array[$j+1]){  // Si j número es mayor a j +1(número de la derecha) entra y realiza esto:
-
-                    // Creamos k, como número j con su respectivo valor en el array.
-                    $k = $array[$j];
-
-                    // Realizamos un intercambio de valores, en el que j pasa a tener el valor del número de la derecha del que estamos comparando.
-                    $array[$j] = $array[$j+1]; 
-                    
-                    // En esta parte, k pasaría a estar en la posición del número de su derecha al ser mayor
-                    $array[$j +1] = $k;
-                }
-            }  
+function findIt(array $seq) : int
+{
+    // Creamos un array para los número repetidos
+    $contadorRepetidos = [];
+    /*
+    1. Comprobamos que el valor, si existe en el array, a la clave le sumas uno, es decir:
+        si el número 1 aparece 2 veces, a la clave 1, la segunda vez le suma ++.
+    2. Si no existe, lo insertas en el array con valor uno.
+    */ 
+    foreach($seq as $valor){
+        if(array_key_exists($valor, $contadorRepetidos)){
+            $contadorRepetidos[$valor]++;    
+        }else{
+            $contadorRepetidos[$valor] = 1;
         }
-        var_dump($array);
     }
-ordenar();
+    // Por cada valor del contador, lo dividimos entre 2, si el resto da 1, es impar.
+    foreach($contadorRepetidos as $clave => $valor){
+        if( $valor%2 == 1){
+            return $clave;
+        }
+    }
+    return null;
+}
+print_r(findIt([20,1,-1,2,-2,3,3,5,5,1,2,4,20,4,-1,-2,5]));
+print_r(findIt([1,1,2,-2,5,2,4,4,-1,-2,5]));
+print_r(findIt([20,1,1,2,2,3,3,5,5,4,20,4,5]));
+print_r(findIt([10]));
+print_r(findIt([1,1,1,1,1,1,10,1,1,1,1]));

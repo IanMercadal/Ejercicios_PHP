@@ -9,8 +9,8 @@
 prueba(); // Llamamos a la función, podemos hacerlo desde arriba en este caso
 
 function prueba(){
-    $a = (int)readline('Introduce un integer: ');
-    $b = (int)readline('Introduce otro integer: ');
+    $a = 12;
+    $b = 13;
     if($a < $b){
         echo $a . " es menor a " . $b;
         return $a . " es menor a" . $b;

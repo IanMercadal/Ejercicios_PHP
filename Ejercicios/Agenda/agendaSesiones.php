@@ -15,6 +15,7 @@ session_start();
         // Revisamos si agenda tiene un valor con isset
         if (isset($_SESSION['agenda'])) {
             $agenda = $_SESSION['agenda'];
+
         // Si no existe, la creamos
         } else {
             $agenda = [];
@@ -66,6 +67,8 @@ session_start();
         var_dump($agenda);
 
         $_SESSION['agenda'] = $agenda;
+        // session_unset();
+        // session_destroy();
     }
     mostrarAgenda();
 
