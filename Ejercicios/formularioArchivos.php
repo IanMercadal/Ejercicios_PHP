@@ -52,6 +52,7 @@ else{
             <label>Sube un fichero</label>
             <input type="file" name="archivoSeleccionado" id="archivoSeleccionado" value="" />
             <input type="file" name="archivoSeleccionado2" id="archivoSeleccionado2" value="" />
+            <input type="file" name="archivoSeleccionado3" id="archivoSeleccionado2" value="" />
             <br>
             <input type="submit" name="submit">
         </form>
