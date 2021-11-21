@@ -17,6 +17,8 @@ $db = conectarDB();
 
             $email = mysqli_real_escape_string($db, filter_var($_POST['email'], FILTER_VALIDATE_EMAIL));
             $password = mysqli_real_escape_string($db, $_POST['password']);
+
+            $errores = [];
     
             if(!$email){
                 $errores[] = "El email es obligatorio o no es válido.";
