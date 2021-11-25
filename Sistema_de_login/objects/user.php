@@ -185,5 +185,94 @@ public function countAll(){
     // return row count
     return $num;
 }
-
+// check if given access_code exist in the database
+function accessCodeExists(){
+ 
+    // query to check if access_code exists
+    $query = "SELECT id
+            FROM " . $this->table_name . "
+            WHERE access_code = ?
+            LIMIT 0,1";
+ 
+    // prepare the query
+    $stmt = $this->conn->prepare( $query );
+ 
+    // sanitize
+    $this->access_code=htmlspecialchars(strip_tags($this->access_code));
+ 
+    // bind given access_code value
+    $stmt->bindParam(1, $this->access_code);
+ 
+    // execute the query
+    $stmt->execute();
+ 
+    // get number of rows
+    $num = $stmt->rowCount();
+ 
+    // if access_code exists
+    if($num>0){
+ 
+        // return true because access_code exists in the database
+        return true;
+    }
+ 
+    // return false if access_code does not exist in the database
+    return false;
+ 
+}
+// used in email verification feature
+function updateStatusByAccessCode(){
+ 
+    // update query
+    $query = "UPDATE " . $this->table_name . "
+            SET status = :status
+            WHERE access_code = :access_code";
+ 
+    // prepare the query
+    $stmt = $this->conn->prepare($query);
+ 
+    // sanitize
+    $this->status=htmlspecialchars(strip_tags($this->status));
+    $this->access_code=htmlspecialchars(strip_tags($this->access_code));
+ 
+    // bind the values from the form
+    $stmt->bindParam(':status', $this->status);
+    $stmt->bindParam(':access_code', $this->access_code);
+ 
+    // execute the query
+    if($stmt->execute()){
+        return true;
+    }
+ 
+    return false;
+}
+// used in forgot password feature
+function updateAccessCode(){
+ 
+    // update query
+    $query = "UPDATE
+                " . $this->table_name . "
+            SET
+                access_code = :access_code
+            WHERE
+                email = :email";
+ 
+    // prepare the query
+    $stmt = $this->conn->prepare($query);
+ 
+    // sanitize
+    $this->access_code=htmlspecialchars(strip_tags($this->access_code));
+    $this->email=htmlspecialchars(strip_tags($this->email));
+ 
+    // bind the values from the form
+    $stmt->bindParam(':access_code', $this->access_code);
+    $stmt->bindParam(':email', $this->email);
+ 
+    // execute the query
+    if($stmt->execute()){
+        return true;
+    }
+ 
+    return false;
+}
 }
