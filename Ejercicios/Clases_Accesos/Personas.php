@@ -53,6 +53,8 @@ class Personas{
 }
 
 $persona = new Personas;
-$persona->raza = "4444";
+// $persona->raza = "4444";
+$persona->nombre = "Juan";
+$persona->edad = 20;
 var_dump($persona);
 ?>

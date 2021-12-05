@@ -10,3 +10,4 @@ inicio, no concuerda con las acciones realizadas posteriormente.
 por la bbdd en el registro de nuevos usuarios, por lo que me he visto obligado a poner como null ese campo, el cual se llama
 access_code.
 - Finalmente, en la primera query para insertar datos predefinidos por la guía, se presentan 2 fechas las cuales no son válidas para la bbdd. Estas deben ser modificadas por una fecha real.
+- Muy posiblemente, no se envíen los correos debido a que debes configurar manualmente que php(Laragon o XAMPP).
