@@ -52,13 +52,9 @@
     ?>
 
     <br>
-    <form method="POST">
-        <label>Nombre</label>
-        <input type="text" name="nombre">
-        <label>Teléfono</label>
-        <input type="number" name="telefono" value="telefono">
-    </form>
-    <button>Insertar</button>
+    <a href="create.php">Crear</a>
+    <a href="delete.php">Eliminar</a>
+    <a href="update.php">Actualizar</a>
 </body>
 
 </html>
