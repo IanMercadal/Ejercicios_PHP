@@ -1,33 +1,33 @@
 <?php
 
 if($_POST){
-// include classes
-require "conexion/db.php";
-include_once "conexion/user.php";
- 
-// get database connection
-$database = new Database();
-$db = $database->getConnection();
- 
-$user = new User($db);
- 
-// check if Nombre and password are in the database
-$user->nombre = $_POST['nombre'];
-$nombre_existe = $user->nombreExiste();
+    // Incluimos los archivos necesarios
+    require "conexion/db.php";
+    include_once "conexion/user.php";
+    
+    // Conexión e instancia de objeto user
+    $database = new Database();
+    $db = $database->getConnection();
+    
+    $user = new User($db);
+    
+    // Comprobamos el nombre de user
+    $user->nombre = $_POST['nombre'];
+    $nombre_existe = $user->nombreExiste();
 
-// validate login
-if ($nombre_existe && password_verify($_POST['password'], $user->password)){
- 
-    // if it is, set the session value to true
-    $_SESSION['user_id'] = $user->id;
-    $_SESSION['nombre'] = htmlspecialchars($user->firstname, ENT_QUOTES, 'UTF-8');
- 
-    header("Location: agenda.php");
-}
- 
-// if username does not exist or password is wrong
-else{
-    echo "Acceso denegado";
+    // Validamos el login
+    if (($_POST['nombre'] == $user->nombre) && ($_POST['password'] == $user->password)){
+    
+        // Añadimos a sesion datos
+        $_SESSION['user_id'] = $user->id;
+        $_SESSION['nombre'] = htmlspecialchars($user->firstname, ENT_QUOTES, 'UTF-8');
+    
+        header("Location: agenda.php");
+    }
+    
+    // Si el user no introduce bien los datos
+    else{
+        echo "Acceso denegado";
 }
 }
 ?>

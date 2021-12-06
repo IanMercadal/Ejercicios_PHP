@@ -1,8 +1,3 @@
-<?php
-
-
-?>
-
 <!DOCTYPE html>
 <html>
 
@@ -16,7 +11,7 @@
 </head>
 
 <body>
-    <table>
+    <!-- <table id="Contactos">
         <tr id="cabecera">
             <th>id</th>
             <th>Nombre</th>
@@ -29,15 +24,27 @@
             <td>Actualizar</td>
             <td>Eliminar</td>
         </tr>
+    </table> -->
 
-        <tr class="Contacto">
-            <td>1</td>
-            <td>Maria</td>
-            <td>Germany</td>
-            <td>Actualizar</td>
-            <td>Eliminar</td>
-        </tr>
-    </table>
+    <?php
+    include "conexion/db.php";
+
+    try{
+        $db = new Database();
+        $db->getConnection();
+
+        $query = "SELECT id,nombre, telefono from contactos";
+        $stmt = $con->prepare($query);
+        $stmt->execute();
+
+        $num = $stmt->rowCount();
+    }
+    catch(PDOException) {
+        echo "No hay resultados";
+    }
+    ?>
+
+    <br>
     <form method="POST">
         <label>Nombre</label>
         <input type="text" name="nombre">
