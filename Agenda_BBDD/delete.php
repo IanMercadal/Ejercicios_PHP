@@ -1,36 +1,56 @@
 <?php
-if($_POST){
     include "conexion/db.php";
 
-    try{
-        $db = new Database();
-        $conn = $db->getConnection();
+    if ($_POST) {
 
-        $id = $_POST['id'];
-        $query = "DELETE from contactos where id = {$id} ";
+        try {
+            $db = new Database();
+            $conn = $db->getConnection();
 
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
+            $id = $_POST['id'];
+            $query = "DELETE from contactos where id = {$id} ";
 
-        echo "Usuario eliminado correctamente";
+            $stmt = $conn->prepare($query);
+            $stmt->execute();
 
-    }catch(PDOException){
-        echo "Algo no ha salido bien";
+            echo "Usuario eliminado correctamente";
+        } catch (PDOException) {
+            echo "Algo no ha salido bien";
+        }
     }
-}
 ?>
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <h1>Eliminar</h1>
+    <?php
+        $db = new Database();
+        $conn = $db->getConnection();
+    
+        $query = "SELECT * FROM contactos ";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+    
+        $num = $stmt->rowCount();
+    
+        if ($num > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+                echo "<li>{$id}" . " " . "{$Nombre}" . " " . "{$Telefono}</li>";
+            }
+        }
+    ?>
     <form method="POST">
         <label>Id</label>
         <input type="number" name="id">
@@ -40,5 +60,12 @@ if($_POST){
         <input type="number" name="telefono" value="telefono">
         <input type="submit">
     </form>
-    </body>
+
+    <br>
+    <a href="agenda.php">Agenda</a>
+    <a href="create.php">Crear</a>
+    <a href="delete.php">Eliminar</a>
+    <a href="update.php">Actualizar</a>
+</body>
+
 </html>

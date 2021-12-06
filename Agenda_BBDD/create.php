@@ -1,6 +1,6 @@
 <?php
+include "conexion/db.php";
 if($_POST){
-    include "conexion/db.php";
 
     try{
         $db = new Database();
@@ -19,6 +19,7 @@ if($_POST){
         echo "Algo no ha salido bien";
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,6 +32,25 @@ if($_POST){
         <link rel="stylesheet" href="">
     </head>
     <body>
+    <h1>Crear</h1>
+    <?php
+        $db = new Database();
+        $conn = $db->getConnection();
+    
+        $query = "SELECT * FROM contactos ";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+    
+        $num = $stmt->rowCount();
+    
+        if ($num > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+                echo "<li>{$id}" . " " . "{$Nombre}" . " " . "{$Telefono}</li>";
+            }
+        }
+    ?>
+
     <form method="POST">
         <label>Nombre</label>
         <input type="text" name="nombre">
@@ -38,5 +58,10 @@ if($_POST){
         <input type="number" name="telefono" value="telefono">
         <input type="submit">
     </form>
+    <br>
+    <a href="agenda.php">Agenda</a>
+    <a href="create.php">Crear</a>
+    <a href="delete.php">Eliminar</a>
+    <a href="update.php">Actualizar</a>
     </body>
 </html>

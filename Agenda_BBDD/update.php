@@ -1,28 +1,31 @@
 <?php
-if($_POST){
     include "conexion/db.php";
 
-    try{
-        $db = new Database();
-        $conn = $db->getConnection();
-
-        $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $telefono = $_POST['telefono'];
-
-        $query = "UPDATE contactos set Nombre = '$nombre' , Telefono = $telefono where id = $id";
-
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-
-        echo "Usuario actualizado correctamente";
-
-    }catch(PDOException){
-        echo "Algo no ha salido bien";
+    // Primero realizaremos el post para ver la lista actualizada
+    if($_POST){
+    
+        try{
+            $db = new Database();
+            $conn = $db->getConnection();
+    
+            // Esta parte es crucial, no insertará bien los datos como nombre si no lleva comillas
+            $id = $_POST['id'];
+            $nombre = $_POST['nombre'];
+            $telefono = $_POST['telefono'];
+    
+            // La variable nombre lleva comillas para poder ser insertado
+            $query = "UPDATE contactos set Nombre = '$nombre' , Telefono = $telefono where id = $id";
+    
+            $stmt = $conn->prepare($query);
+            $stmt->execute();
+    
+            echo "Usuario actualizado correctamente";
+    
+        }catch(PDOException){
+            echo "Algo no ha salido bien";
+        }
     }
-}
-
-?>
+ ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,25 +37,27 @@ if($_POST){
         <link rel="stylesheet" href="">
     </head>
     <body>
+        <h1>Actualizar</h1>
+       <?php
 
-    <?php
-       $db = new Database();
-       $conn = $db->getConnection();
+            // Llamamos a la bbdd para mostrar los datos actualizados
+            $db = new Database();
+            $conn = $db->getConnection();
 
-       $query = "SELECT * FROM contactos ";
-       $stmt = $conn->prepare($query);
-       $stmt->execute();
+            $query = "SELECT * FROM contactos ";
+            $stmt = $conn->prepare($query);
+            $stmt->execute();
 
-       $num = $stmt->rowCount();
+            $num = $stmt->rowCount();
 
-       if($num > 0){
-           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-               extract($row);
-               echo "<li>{$id}" . " " . "{$Nombre}". " " . "{$Telefono}</li>";
-           }
-       }
-    ?>
-
+            if($num > 0){
+                // FETCH_ASSOC nos devolvera un array indexado con los datos
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    extract($row);
+                    echo "<li>{$id}" . " " . "{$Nombre}". " " . "{$Telefono}</li>";
+                }
+            }
+       ?>
     <form method="POST">
         <label>Id</label>
         <input type="number" name="id">
@@ -62,5 +67,11 @@ if($_POST){
         <input type="number" name="telefono" value="telefono">
         <input type="submit">
     </form>
+
+    <br>
+    <a href="agenda.php">Agenda</a>
+    <a href="create.php">Crear</a>
+    <a href="delete.php">Eliminar</a>
+    <a href="update.php">Actualizar</a>
     </body>
 </html>
