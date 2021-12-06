@@ -31,13 +31,20 @@
 
     try{
         $db = new Database();
-        $db->getConnection();
+        $conn = $db->getConnection();
 
-        $query = "SELECT id,nombre, telefono from contactos";
-        $stmt = $con->prepare($query);
+        $query = "SELECT * FROM contactos ";
+        $stmt = $conn->prepare($query);
         $stmt->execute();
 
         $num = $stmt->rowCount();
+
+        if($num > 0){
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                extract($row);
+                echo "<li>{$id}" . " " . "{$Nombre}". " " . "{$Telefono}</li>";
+            }
+        }
     }
     catch(PDOException) {
         echo "No hay resultados";

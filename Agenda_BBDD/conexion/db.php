@@ -12,10 +12,10 @@ class Database{
     public function getConnection(){
  
         try{
-            $con = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+            $conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
         }catch(PDOException){
             echo "Connection error: ";
         }
-        return $con;
+        return $conn;
     }
 }
