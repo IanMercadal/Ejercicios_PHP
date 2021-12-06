@@ -41,7 +41,7 @@ if($_POST){
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="estilos/estilos.css">
 </head>
 
 <body>
@@ -50,9 +50,9 @@ if($_POST){
         <h1>Login</h1>
 
         <form method="POST">
-            <label>Nombre</label>
+            <label>Nombre - Ian</label>
             <input type="text" name="nombre">
-            <label>Password</label>
+            <label>Password - Miau</label>
             <input type="text" name="password">
 
             <input type="submit">

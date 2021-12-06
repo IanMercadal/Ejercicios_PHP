@@ -7,7 +7,7 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="estilos/estilos.css">
 </head>
 
 <body>
@@ -59,9 +59,10 @@
     ?>
 
     <br>
-    <a href="create.php">Crear</a>
-    <a href="delete.php">Eliminar</a>
-    <a href="update.php">Actualizar</a>
+    <a href="agenda.php" class="link-boton">Agenda</a>
+    <a href="create.php" class="link-boton">Crear</a>
+    <a href="delete.php" class="link-boton">Eliminar</a>
+    <a href="update.php" class="link-boton">Actualizar</a>
 </body>
 
 </html>
