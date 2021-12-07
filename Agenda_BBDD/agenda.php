@@ -12,24 +12,9 @@
 
 <body>
     <h1>Agenda</h1>
-    <!-- <table id="Contactos">
-        <tr id="cabecera">
-            <th>id</th>
-            <th>Nombre</th>
-            <th>Telefono</th>
-        </tr>
-        <tr class="Contacto">
-            <td>1</td>
-            <td>Maria</td>
-            <td>Germany</td>
-            <td>Actualizar</td>
-            <td>Eliminar</td>
-        </tr>
-    </table> -->
-
     <?php
     include "conexion/db.php";
-
+    
     try{
         // Creamos la instancia para que haga la conexión
         $db = new Database();
